@@ -1,3 +1,4 @@
+from uuid import UUID
 from sqlalchemy.orm import Session
 from . import models
 from . import schemas
@@ -16,8 +17,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    fake_hashed_password = user.password + "notreallyhashed"
-    db_user = models.User(email=user.email, hashed_password=fake_hashed_password)
+    db_user = models.User(email=user.email, user_name=user.user_name)
     db.add(db_user)
     db.flush()
     return db_user
@@ -27,8 +27,8 @@ def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Item).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
+def create_user_item(db: Session, item: schemas.ItemCreate, user_id: UUID):
+    db_item = models.Item(**item.dict(), user_id=user_id)
     db.add(db_item)
     db.flush()
     return db_item

@@ -7,21 +7,17 @@ import uuid
 
 class User(Base):
     __tablename__ = "users"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    user_name = Column(String)
     is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
+    items = relationship("Item", back_populates="user")
 
 
 class Item(Base):
     __tablename__ = "items"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    item_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, index=True)
     description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="items")
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"))
+    user = relationship("User", back_populates="items")

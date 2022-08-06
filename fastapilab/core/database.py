@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, URL
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.engine.url import URL
 import os
 
 engine_uri = URL(

@@ -13,7 +13,7 @@ class ItemCreate(ItemBase):
 
 class Item(ItemBase):
     item_id: UUID
-    owner_id: int
+    user_id: UUID
 
     class Config:
         orm_mode = True
@@ -24,7 +24,7 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    password: str
+    user_name: str
 
 
 class User(UserBase):

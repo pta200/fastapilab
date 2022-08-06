@@ -1,9 +1,8 @@
-FROM python:3.8
+FROM python:3.10
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install "fastapi[all]" sqlalchemy psycopg2
 
 COPY . .
 
@@ -14,4 +13,4 @@ LABEL project="fastapi"
 LABEL name="fastapi"
 LABEL build_date="$BUILD_DATE"
 LABEL build_version="$BUILD_VERSION"
-ENTRYPOINT [ "./run_fastapi.sh"]
+ENTRYPOINT [ "./run_fastapilab.sh"]

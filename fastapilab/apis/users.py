@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from core import crud
-from core import schemas
+from ..core import crud, schemas
 from sqlalchemy.orm import Session
 from uuid import UUID
 from ..dependencies import get_db
@@ -36,7 +35,7 @@ def read_user(user_id: UUID, db: Session = Depends(get_db)):
 
 
 @user_router.post("/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)):
+def create_item_for_user(user_id: UUID, item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_user_item(db=db, item=item, user_id=user_id)
 
 
