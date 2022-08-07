@@ -3,6 +3,9 @@ from ..core import crud, schemas
 from sqlalchemy.orm import Session
 from uuid import UUID
 from ..dependencies import get_db
+import logging
+
+logger = logging.getLogger(__name__)
 
 user_router = APIRouter(
     prefix="/users",
@@ -14,6 +17,7 @@ user_router = APIRouter(
 
 @user_router.post("/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    logger.info("create new user....")
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
