@@ -6,29 +6,35 @@ from . import schemas
 
 def generate_filter(column, v):
     if re.match(r"^!", v):
-    """__ne__"""
-    val = re.sub(r"!", "", v)
-    return column.__ne__(val)
+        """__ne__"""
+        val = re.sub(r"!", "", v)
+        return column.__ne__(val)
+        
     if re.match(r">(?!=)", v):
-    """__gt__"""
-    val = re.sub(r">(?!=)", "", v)
-    return column.__gt__(val)
+        """__gt__"""
+        val = re.sub(r">(?!=)", "", v)
+        return column.__gt__(val)
+        
     if re.match(r"<(?!=)", v):
-    """__lt__"""
-    val = re.sub(r"<(?!=)", "", v)
-    return column.__lt__(val)
+        """__lt__"""
+        val = re.sub(r"<(?!=)", "", v)
+        return column.__lt__(val)
+        
     if re.match(r">=", v):
-    """__ge__"""
-    val = re.sub(r">=", "", v)
-    return column.__ge__(val)
+        """__ge__"""
+        val = re.sub(r">=", "", v)
+        return column.__ge__(val)
+        
     if re.match(r"<=", v):
-    """__le__"""
-    val = re.sub(r"<=", "", v)
-    return column.__le__(val)
+        """__le__"""
+        val = re.sub(r"<=", "", v)
+        return column.__le__(val)
+        
     if re.match(r"(\w*),(\w*)", v):
-    """between"""
-    a, b = re.split(r",", v)
-    return column.between(a, b)
+        """between"""
+        a, b = re.split(r",", v)
+        return column.between(a, b)
+        
     """ default __eq__ """
     return column.__eq__(v)
 
