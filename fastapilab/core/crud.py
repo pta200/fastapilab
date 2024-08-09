@@ -19,37 +19,37 @@ def generate_filter(column, v):
     if re.match(r"^!", v):
         """__ne__"""
         val = re.sub(r"!", "", v)
-        return column.__ne__(get_stat_type(column, val))
+        return column.__ne__(get_field_type(column, val))
 
     if re.match(r">(?!=)", v):
         """__gt__"""
         val = re.sub(r">(?!=)", "", v)
         logger.debug("match gt %s", val)
-        return column.__gt__(get_stat_type(column, val))
+        return column.__gt__(get_field_type(column, val))
 
     if re.match(r"<(?!=)", v):
         """__lt__"""
         val = re.sub(r"<(?!=)", "", v)
         logger.debug("match lt %s", val)
-        return column.__lt__(get_stat_type(column, val))
+        return column.__lt__(get_field_type(column, val))
 
     if re.match(r">=", v):
         """__ge__"""
         val = re.sub(r">=", "", v)
-        return column.__ge__(get_stat_type(column, val))
+        return column.__ge__(get_field_type(column, val))
 
     if re.match(r"<=", v):
         """__le__"""
         val = re.sub(r"<=", "", v)
-        return column.__le__(get_stat_type(column, val))
+        return column.__le__(get_field_type(column, val))
 
     if re.match(r"(\w*),(\w*)", v):
         """between"""
         a, b = re.split(r",", v)
-        return column.between((get_stat_type(column, a)), (get_stat_type(column, b)))
+        return column.between((get_field_type(column, a)), (get_field_type(column, b)))
 
     """ default __eq__ """
-    return column.__eq__(get_stat_type(column, v))
+    return column.__eq__(get_field_type(column, v))
 
 def build_query(table, filter_by):
     filters = []
