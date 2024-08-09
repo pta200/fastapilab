@@ -64,7 +64,7 @@ def get_filtered_user(db: Session, api_filters: dict):
         }
     """
 
-    return db.query(models.User).filter(build_query(models.User, api_filters).all()
+    return db.query(models.User).filter(and_(*build_query(models.User, api_filters)).all()
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
